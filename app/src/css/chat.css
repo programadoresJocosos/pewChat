@@ -1,0 +1,40 @@
+p{
+    font-size: 1.2em;
+}
+
+.chat-container{
+    width: 30vmin;
+    height: 60vmin;
+    margin: 10vmin auto;
+
+}
+
+.user-name{ 
+    width: 32vmin;;
+    height: 2vmin;
+    text-align: center;
+}
+
+.msg-container{ 
+    background-color: gray;
+    width: 30vmin;
+    height: 60vmin;
+    padding: 1em;
+    overflow-y: scroll;
+}
+
+.msg-card{
+    width: 60%;
+    padding: .1rem 1rem;
+    margin-top: 1em;
+    border-radius: 15px;
+    position: relative;
+    text-align: justify;
+}
+.bgc-me{
+    background-color: purple;
+    left: calc(40% - 2em);
+}
+.bgc-other{
+    background-color: green;
+}

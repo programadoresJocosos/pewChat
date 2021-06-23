@@ -1,5 +1,7 @@
-import { useEffect, useState, useReducer } from 'react'
+import { useEffect, useState, useReducer, useRef } from 'react'
 import Gun from 'gun'
+import './css/chat.css'
+import moment from 'moment'
 
 // initialize gun locally
 const gun = Gun({
@@ -27,6 +29,8 @@ export default function App() {
     name: '', message: ''
   })
 
+  const messagesEndRef = useRef(null)
+
   // initialize the reducer & state for holding the messages array
   const [state, dispatch] = useReducer(reducer, initialState)
 
@@ -42,20 +46,23 @@ export default function App() {
         createdAt: m.createdAt
       })
     })
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [])
 
   // set a new message in gun, update the local state to reset the form field
   function saveMessage() {
     const messages = gun.get('messages').on( data => 
         console.log("Se cambió el dato: ", data))
+    var date = moment().format('LT');
     messages.set({
       name: formState.name,
       message: formState.message,
-      createdAt: Date.now()
+      createdAt: date
     })
     setForm({
-      name: '', message: ''
+      name: formState.name, message: ''
     })
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 
   // update the form state as the user types
@@ -64,29 +71,37 @@ export default function App() {
   }
 
   return (
-    <div style={{ padding: 30 }}>
+    <div className="chat-container">
       <input
+        className="user-name"
         onChange={onChange}
         placeholder="Name"
         name="name"
         value={formState.name}
       />
-      <input
-        onChange={onChange}
-        placeholder="Message"
-        name="message"
-        value={formState.message}
-      />
-      <button onClick={saveMessage}>Send Message</button>
-      {
-        state.messages.map(message => (
-          <div key={message.createdAt}>
-            <h2>{message.message}</h2>
-            <h3>From: {message.name}</h3>
-            <p>Date: {message.createdAt}</p>
-          </div>
-        ))
-      }
+      <div className="msg-container">
+        {
+          state.messages.map(message => (
+            <div ref={messagesEndRef} className={`msg-card ${message.name === formState.name ? "bgc-me": "bgc-other"}`} key={message.createdAt}>
+              <p>
+                {message.name === formState.name ? <></>:<b>{message.name}</b>}
+                {message.name === formState.name ? <></>:<br/>}
+                {message.message}
+              </p>
+              <sub>
+                {message.createdAt}
+              </sub>
+            </div>
+          ))
+        }
+      </div>
+        <input
+          onChange={onChange}
+          placeholder="Message"
+          name="message"
+          value={formState.message}
+        />
+        <button onClick={saveMessage}>Send Message</button>
     </div>
   );
 }

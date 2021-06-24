@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Gun from 'gun'
+import Moment from 'moment'
 
 // initialize gun locally
 const gun = Gun({
@@ -37,7 +38,7 @@ class Chat extends Component {
         msg.set({
             name: this.state.name,
             message: this.state.message,
-            timestamp: Date.now()
+            timestamp: Moment().format('LT')
         })
         this.setState({name: '', message: ''})
     }
@@ -67,7 +68,7 @@ class Chat extends Component {
                     <div key={message.timestamp}>
                         <h2>{message.message}</h2>
                         <h3>From: {message.name}</h3>
-                        <p>Date: {message.createdAt}</p>
+                        <p>Date: {message.timestamp}</p>
                     </div>
                     ))
                 }

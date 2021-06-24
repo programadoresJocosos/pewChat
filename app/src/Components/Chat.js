@@ -32,7 +32,7 @@ class Chat extends Component {
         gun.get(getUrl).map().on( m=> {
             tmpState.push(m)
         } )
-        if (tmpState.length > this.state.messages.length)
+        if (tmpState.length !== this.state.messages.length)
             this.setState({ messages: tmpState })
     }
 
@@ -56,10 +56,10 @@ class Chat extends Component {
               <p className="user-name">{this.state.name}</p>
               <div className="msg-container">
                 {
-                  this.state.messages.map(message => (
+                  this.state.messages.map((message, index) => (
                     <div className={`msg-card
                         ${message.name === this.state.name
-                                ? "bgc-me": "bgc-other"}`} key={message.createdAt}>
+                                ? "bgc-me": "bgc-other"}`} key={index}>
                       <p>
                         {message.name === this.state.name ? <></>:<b>{message.name}</b>}
                         {message.name === this.state.name ? <></>:<br/>}
@@ -72,13 +72,15 @@ class Chat extends Component {
                   ))
                 }
               </div>
-                <input
+              <div className="textbox-container">
+                <input id="textbox"
                   onChange={this.onChange}
                   placeholder="Message"
                   name="message"
                   value={this.state.message}
                 />
-                <button onClick={this.saveMessage}>Send Message</button>
+                <button  onClick={this.saveMessage}>Send Message</button>
+              </div>
             </div>
         )
     }

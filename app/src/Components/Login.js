@@ -12,37 +12,57 @@ const getUrl = "users"
 class Login extends Component {
     state = {
         name: "",
-        pass: ""
+        pass: "",
+        users: [],
     }
     
+    componentDidMount() {
+        gun.get(getUrl).map().on( m => {
+            this.setState({ users: [...this.state.users, m] })
+        } )
+    }
+
+    componentDidUpdate() {
+        let tmpState = []
+        gun.get(getUrl).map().on( m => {
+            tmpState.push(m)
+        } )
+        if (tmpState.length !== this.state.users.length)
+            this.setState({ users: tmpState })
+    }
+
     onChange = (e) => {
         this.setState({[e.target.name]: e.target.value})
     }
 
     onSubmit = (e) => {
-        let found = false
-        let pass
         e.preventDefault()
-        if (!this.state.name.length || !this.state.name.length)
+        var found = false
+        let tmpPass = this.state.pass
+        if (!this.state.name.length || !this.state.pass.length)
             alert("Empty name/password field")
         else {
-            const msg = gun.get(getUrl)
-            for (let i in msg) {
+            for (let i of this.state.users) {
                 if (i.name === this.state.name) {
                     found = true
-                    pass = i.pass
+                    tmpPass = i.pass
                     break
                 }
             }
-            if (!found) {
+            console.log(found, tmpPass)
+            if (found === false) {
+                console.log("Not found: ", this.state.pass, tmpPass)
+                const msg = gun.get(getUrl)
                 msg.set({
                     name: this.state.name,
-                    pass: pass
+                    pass: this.state.pass
                 })
                 this.props.user(this.state.name)
             }
-            else if (found && pass === this.state.pass)
+            else if (found === true && tmpPass === this.state.pass) {
+                console.log("found")
                 this.props.user(this.state.name)
+            }
             else
                 alert("User or password wrong")
         }
@@ -58,7 +78,7 @@ class Login extends Component {
                         type="text"
                         onChange={this.onChange}/>
                     <input
-                        name="password"
+                        name="pass"
                         placeholder="Password"
                         type="text"
                         onChange={this.onChange}/>

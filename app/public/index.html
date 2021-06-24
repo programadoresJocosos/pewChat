@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
@@ -27,6 +27,11 @@
     <title>React App</title>
   </head>
   <body>
+    <header>
+      <div class="toggle-container">
+        <input type="checkbox" id="switch" name="theme"/><label for="switch">Toggle</label>
+      </div>
+    </header>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
@@ -39,5 +44,25 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script>
+      var checkbox = document.querySelector('input[name=theme]');
+
+      checkbox.addEventListener('change', function() {
+        if(this.checked) {
+            trans()
+            document.documentElement.setAttribute('data-theme', 'dark')
+        } else {
+            trans()
+            document.documentElement.setAttribute('data-theme', 'light')
+        }
+        })
+
+        let trans = () => {
+            document.documentElement.classList.add('transition');
+            window.setTimeout(() => {
+                document.documentElement.classList.remove('transition')
+            }, 1000)
+      }
+    </script>
   </body>
 </html>

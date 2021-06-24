@@ -79,7 +79,7 @@ class Chat extends Component {
                   name="message"
                   value={this.state.message}
                 />
-                <button  onClick={this.saveMessage}>Send Message</button>
+                <button id="btn-send" onClick={this.saveMessage}>Send Message</button>
               </div>
             </div>
         )

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Gun from 'gun'
+import SHA256 from 'crypto-js/sha256'
 
 // initialize gun locally
 const gun = Gun({
@@ -38,7 +39,7 @@ class Login extends Component {
     onSubmit = (e) => {
         e.preventDefault()
         var found = false
-        let tmpPass = this.state.pass
+        let tmpPass = SHA256(this.state.pass).toString()
         if (!this.state.name.length || !this.state.pass.length)
             alert("Empty name/password field")
         else {
@@ -49,20 +50,16 @@ class Login extends Component {
                     break
                 }
             }
-            console.log(found, tmpPass)
             if (found === false) {
-                console.log("Not found: ", this.state.pass, tmpPass)
                 const msg = gun.get(getUrl)
                 msg.set({
                     name: this.state.name,
-                    pass: this.state.pass
+                    pass: SHA256(this.state.pass).toString()
                 })
                 this.props.user(this.state.name)
             }
-            else if (found === true && tmpPass === this.state.pass) {
-                console.log("found")
+            else if (found === true && tmpPass === SHA256(this.state.pass).toString())
                 this.props.user(this.state.name)
-            }
             else
                 alert("User or password wrong")
         }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Gun from 'gun'
 import Moment from 'moment'
+import '../css/chat.css'
 
 // initialize gun locally
 const gun = Gun({
@@ -18,7 +19,9 @@ class Chat extends Component {
         messages: []
     }
 
+
     componentDidMount() {
+        this.setState({name: this.props.name})
         gun.get(getUrl).map().on( m=> {
             this.setState({ messages: [...this.state.messages, m] })
         } )
@@ -40,7 +43,7 @@ class Chat extends Component {
             message: this.state.message,
             timestamp: Moment().format('LT')
         })
-        this.setState({name: '', message: ''})
+        this.setState({message: ''})
     }
 
     onChange = (e) => {
@@ -49,29 +52,33 @@ class Chat extends Component {
 
     render() {
         return (
-            <div>
-                <input
-                    onChange={this.onChange}
-                    placeholder="Username"
-                    name="name"
-                    value={this.state.name}
-                />
-                <input
-                    onChange={this.onChange}
-                    placeholder="Type something..."
-                    name="message"
-                    value={this.state.message}
-                />
-                    <button onClick={this.saveMessage}>Send Message</button>
+            <div className="chat-container">
+              <p className="user-name">{this.state.name}</p>
+              <div className="msg-container">
                 {
-                    this.state.messages.map(message => (
-                    <div key={message.timestamp}>
-                        <h2>{message.message}</h2>
-                        <h3>From: {message.name}</h3>
-                        <p>Date: {message.timestamp}</p>
+                  this.state.messages.map(message => (
+                    <div className={`msg-card
+                        ${message.name === this.state.name
+                                ? "bgc-me": "bgc-other"}`} key={message.createdAt}>
+                      <p>
+                        {message.name === this.state.name ? <></>:<b>{message.name}</b>}
+                        {message.name === this.state.name ? <></>:<br/>}
+                        {message.message}
+                      </p>
+                      <sub>
+                        {message.timestamp}
+                      </sub>
                     </div>
-                    ))
+                  ))
                 }
+              </div>
+                <input
+                  onChange={this.onChange}
+                  placeholder="Message"
+                  name="message"
+                  value={this.state.message}
+                />
+                <button onClick={this.saveMessage}>Send Message</button>
             </div>
         )
     }

@@ -1,14 +1,22 @@
 import React, { Component } from 'react'
 import Chat from './Components/Chat'
-// import Gun from 'gun'
-// import './css/chat.css'
-// import moment from 'moment'
+import Login from './Components/Login'
 
 class App extends Component {
+    state = {
+        user: ''
+    }
+
+    getUser = (e) => {
+        this.setState({user: e})
+    }
 
     render() {
         return (
-            <Chat/>
+            <div>
+                { this.state.user === '' ? <Login user={this.getUser}/> : 
+                    <Chat name={this.state.user}/>}
+            </div>
         )
     }
 }

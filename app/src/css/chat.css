@@ -1,5 +1,24 @@
+html{
+    --bkg-color: #cfcfcf;
+    --bkg-main-container: #cccccc;
+    --header-font-color: #3b7c94;
+    --font-color: #1e2224;
+    --self-card: rgba(36, 133, 123, .5);
+    --other-messages: rgba(122, 71, 148, .5);
+}
+
+.dark-mode{
+    --bkg-color: #36393f;
+    --bkg-main-container: #2f3136;
+}
+
+body{
+    background-color: var(--bkg-color);
+}
+
 p{
     font-size: 1.2em;
+    color: var(--font-color);
 }
 
 .chat-container{
@@ -10,13 +29,13 @@ p{
 }
 
 .user-name{ 
-    width: 32vmin;;
+    width: 32vmin;
     height: 2vmin;
     text-align: center;
 }
 
 .msg-container{ 
-    background-color: gray;
+    background-color: var(--bkg-main-container);
     width: 30vmin;
     height: 60vmin;
     padding: 1em;
@@ -26,15 +45,26 @@ p{
 .msg-card{
     width: 60%;
     padding: .1rem 1rem;
-    margin-top: 1em;
+    margin-top: 1.5em;
     border-radius: 15px;
     position: relative;
     text-align: justify;
 }
+
 .bgc-me{
-    background-color: purple;
+    background-color: var(--self-card);
     left: calc(40% - 2em);
 }
+
+.bgc-me sub{
+    position: absolute;
+    right: 10px;
+}
 .bgc-other{
-    background-color: green;
+    background-color: var(--other-messages);
+}
+
+.bgc-other sub{
+    position: absolute;
+    left: 10px;
 }

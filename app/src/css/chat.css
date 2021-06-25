@@ -3,29 +3,33 @@ html{
     --bkg-color: #fcfcfc;
     --bkg-main-container: #aaaaaa;
     --font-color: #1e2224;
-    --self-card: rgba(36, 133, 123, .5);
-    --other-messages: rgba(122, 71, 148, .5);
+    --self-card: rgba(36, 133, 123, .7);
+    --other-messages: rgba(122, 71, 148, 0.7);
     --time-color: #1e2224;
     --checkbox-bkg-color: gray;
     --switch-color: white;
     --textbox-bkg-color: #40444b;
     --textbox-content-color: #cccccc;
     --textbox-bkg-color-hover: gray;
+    --button-unselected: #e0e0e0;
+    --button-selected: #419fd9;
 }
 
 html[data-theme='dark']{
-    --bkg-user-container: #888888;
-    --bkg-color: #333333;
-    --bkg-main-container: #434343;
-    --font-color: #1e2224;
-    --self-card: rgba(236, 179, 87, 0.5);
-    --other-messages: rgba(39, 211, 159, 0.5);
+    --bkg-user-container: #17212b;
+    --bkg-color: #262626;
+    --bkg-main-container: #0e1621;
+    --font-color: #e0e0e0;
+    --other-messages: rgba(122, 71, 148, 0.7);
+    --self-card: rgba(36, 133, 123, .7);
     --time-color: #cccccc;
     --checkbox-bkg-color: #cccccc;
     --switch-color: gray;
     --textbox-bkg-color: #40444b;
     --textbox-content-color: #cccccc;
     --textbox-bkg-color-hover: gray;
+    --button-unselected: #30475E;
+    --button-selected: #2b5278;
 }
 
 header {
@@ -36,14 +40,18 @@ body{
     background-color: var(--bkg-color);
 }
 
-p{
+h2 {
+    color: var(--font-color);
+}
+
+p {
     font-size: 1.2em;
     color: var(--font-color);
 }
 
 .chat-container{
-    width: 50vw;
-    height: 80vh;
+    /* width: 50vw; */
+    /* height: 80vh; */
     /* margin: 0 50%; */
     /* transform: translate(-50%, 0); */
 }
@@ -55,6 +63,7 @@ p{
 }
 
 .user-container {
+    overflow-y: scroll;
     display: block;
     height: calc(100% - 2em);
     width: 20vh;
@@ -62,6 +71,29 @@ p{
     border-radius: 15px;
     padding: 1em;
     margin-right: 5px;
+}
+
+.user-card {
+    width: 100%;
+    text-align: left;
+    font-size: 1.3rem;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--button-unselected);
+    transition: ease 0.05s;
+    color: var(--font-color);
+    padding: 0.3rem 1rem;
+}
+
+.user-card:focus {
+    outline: none;
+}
+
+.user-card:hover {
+    font-size: 1.5rem;
+    background-color: var(--button-selected);
+    transition: ease 0.05s;
 }
 
 .user-name{ 
@@ -96,7 +128,8 @@ p{
 .bgc-me sub{
     color: var(--time-color);
     position: absolute;
-    right: 10px;
+    right: 15px;
+    bottom: -18px;
 }
 .bgc-other{
     background-color: var(--other-messages);
@@ -105,7 +138,8 @@ p{
 .bgc-other sub{
     color: var(--time-color);
     position: absolute;
-    left: 10px;
+    left: 15px;
+    bottom: -18px;
 }
 
 .textbox-container {

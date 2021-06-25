@@ -13,6 +13,7 @@ const getUrl = "messages"
 const getUsers = "users"
 
 class Chat extends Component {
+    messagesEndRef = React.createRef()
     state = {
         name: '',
         message: '',
@@ -21,15 +22,20 @@ class Chat extends Component {
         messages: []
     }
 
+    scrollToBottom = () => {
+        this.messagesEndRef?.current.scrollIntoView({ behavior: 'smooth' })
+    }
 
     componentDidMount() {
-        this.setState({name: this.props.name})
+        this.scrollToBottom()
+        this.setState({ name: this.props.name })
         gun.get(getUrl).map().on( m=> {
             this.setState({ messages: [...this.state.messages, m] })
         } )
     }
 
     componentDidUpdate() {
+        this.scrollToBottom()
         let tmpState = this.getData()
         if (tmpState.length !== this.state.messages.length)
             this.setState({ messages: tmpState })
@@ -55,18 +61,15 @@ class Chat extends Component {
 
     saveMessage = () => {
         const msg = gun.get(getUrl)
-        msg.set({
-            name: this.state.name,
-            message: this.state.message,
-            timestamp: Moment().format('LT'),
-            receiver: this.state.receiver
-        })
-        this.setState({message: ''})
-    }
-
-    searchForUser = () => {
-        let data = this.getData()
-        
+        if (this.state.message.length > 0) {
+            msg.set({
+                name: this.state.name,
+                message: this.state.message,
+                timestamp: Moment().format('LT'),
+                receiver: this.state.receiver
+            })
+            this.setState({message: ''})
+        }
     }
 
     onChange = (e) => {
@@ -103,6 +106,7 @@ class Chat extends Component {
                             </div>
                           ))
                         }
+                        <div ref={this.messagesEndRef}/>
                         </div>
                         <div className="textbox-container">
                         <input id="textbox"

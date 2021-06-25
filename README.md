@@ -54,12 +54,12 @@
   <img src="imgs/app.png" alter=""></img>
   
   <h2>Capturas de ejecución</h2>
-  <img src="imgs/pewchat.png" alter=""></img>
+  <img src="imgs/pewchat.png" alter="" width="60%"></img>
   <p>Login de Pew chat (modo claro).</p>
-  <img src="imgs/pewchat_dark.png" alter=""></img>
+  <img src="imgs/pewchat_dark.png" width="60%" alter=""></img>
   <p>Login de Pew chat (modo oscuro).</p>
-  <img src="imgs/pewchat_chat.png" alter=""></img>
+  <img src="imgs/pewchat_chat.png" width="60%" alter=""></img>
   <p>Página principal de Pew chat (modo claro).</p>
-  <img src="imgs/pewchat_chatdark.png" alter=""></img>
+  <img src="imgs/pewchat_chatdark.png" width="60%" alter=""></img>
   <p>Página principal de Pew chat (modo oscuro).</p>
 </div>

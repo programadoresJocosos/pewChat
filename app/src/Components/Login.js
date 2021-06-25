@@ -57,9 +57,12 @@ class Login extends Component {
                     pass: SHA256(this.state.pass).toString()
                 })
                 this.props.user(this.state.name)
+                alert(`New account ${this.state.name} succesfully created!`)
             }
-            else if (found === true && tmpPass === SHA256(this.state.pass).toString())
+            else if (found === true && tmpPass === SHA256(this.state.pass).toString()){
+                alert(`Welcome back ${this.state.name}`)
                 this.props.user(this.state.name)
+            }
             else
                 alert("User or password wrong")
         }
@@ -77,7 +80,7 @@ class Login extends Component {
                     <input
                         name="pass"
                         placeholder="Password"
-                        type="text"
+                        type="password"
                         onChange={this.onChange}/>
                     <button type="submit">Login</button>
                 </form>            

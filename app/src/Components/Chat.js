@@ -19,7 +19,8 @@ class Chat extends Component {
         message: '',
         timestamp: '',
         receiver: '',
-        messages: []
+        messages: [],
+        users: ['global']
     }
 
     scrollToBottom = () => {
@@ -30,15 +31,18 @@ class Chat extends Component {
         this.scrollToBottom()
         this.setState({ name: this.props.name })
         gun.get(getUrl).map().on( m=> {
-            this.setState({ messages: [...this.state.messages, m] })
+            this.setState({ messages: [...this.state.messages, m],
+                users: [...this.state.users, ...this.getNames()],
+                receiver: 'global'})
         } )
     }
 
     componentDidUpdate() {
         this.scrollToBottom()
-        let tmpState = this.getData()
-        if (tmpState.length !== this.state.messages.length)
-            this.setState({ messages: tmpState })
+        let tmpMsgs = this.getData()
+        let tmpUsrs = this.getNames()
+        if (tmpMsgs.length !== this.state.messages.length)
+            this.setState({ messages: tmpMsgs, users: ['global', ...tmpUsrs] })
     }
 
     getData = (users = false) => {
@@ -77,6 +81,7 @@ class Chat extends Component {
     }
 
     render() {
+        console.log(this.state.users)
         return (
             <div className="app-container">
                 <h2 className="user-name">{this.state.name}</h2>

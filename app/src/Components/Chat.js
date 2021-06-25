@@ -9,7 +9,6 @@ const gun = Gun({
     'http://localhost:3030/gun'
   ]
 })
-const getUrl = "messages"
 const getUsers = "users"
 
 class Chat extends Component {
@@ -50,14 +49,13 @@ class Chat extends Component {
 
     getData = (users = false) => {
         let tmp = []
-        let [first, second] = this.getFirstSecond()
         let url
         if (users === true)
             url = getUsers
         else if (this.state.receiver === "global")
             url = "global"
         else
-            url = `${first}:${second}`
+            url = this.getFirstSecond()
         gun.get(url).map().on( m => {
             tmp.push(m)
         })
@@ -75,13 +73,14 @@ class Chat extends Component {
     }
 
     getFirstSecond = () => {
+        if (this.state.receiver === "global")
+            return this.state.receiver
         return (this.state.name < this.state.receiver)
-                ? [this.state.name, this.state.receiver] : [this.state.receiver, this.state.name]
+                ? `${this.state.name}:${this.state.receiver}` : `${this.state.receiver}:${this.state.name}`
     }
 
     saveMessage = () => {
-        const [first, second] = this.getFirstSecond()
-        const url = (this.state.receiver === "global") ? "global" : `${first}:${second}`
+        const url = (this.state.receiver === "global") ? "global" : this.getFirstSecond()
         const msg = gun.get(url)
         if (this.state.message.length > 0) {
             msg.set({
@@ -95,6 +94,10 @@ class Chat extends Component {
         }
     }
 
+    getSelected = () => {
+        let [first, second] = this.getFirstSecond()
+    }
+
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
     }
@@ -104,17 +107,19 @@ class Chat extends Component {
             <div className="app-container">
                 <h2 className="user-name">{this.state.name}</h2>
                 <div className="main-chat">
-                    <div className="user-container">
-                    {['global', ...this.getNames()].map((e, i) =>
-                        <button
-                            name="receiver"
-                            value={e}
-                            onClick={this.onChange}
-                            className="user-card"
-                            key={i}> 
-                            {e}
-                        </button>
-                    )}
+                    <div
+                    className="user-container">
+                        {['global', ...this.getNames()].map((e, i) =>
+                            <button
+                                name="receiver"
+                                value={e}
+                                onClick={this.onChange}
+                                className="user-card"
+                                id={this.state.receiver === e ? "selected" : "unselected"}
+                                key={i}> 
+                                {e}
+                            </button>
+                        )}
                     </div>
                     <div className="chat-container">
                         <div className="msg-container">
@@ -122,7 +127,8 @@ class Chat extends Component {
                             this.getData().map((message, index) => (
                             <div className={`msg-card
                                 ${message.name === this.state.name
-                                        ? "bgc-me": "bgc-other"}`} key={index}>
+                                        ? "bgc-me": "bgc-other"}`}
+                            key={index}>
                                 <p>
                                     {message.name === this.state.name ? <></>:<b>{message.name}</b>}
                                     {message.name === this.state.name ? <></>:<br/>}

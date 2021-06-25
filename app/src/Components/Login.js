@@ -86,6 +86,7 @@ class Login extends Component {
                             name="pass"
                             placeholder="Password"
                             type="password"
+                            autoComplete="false"
                             onChange={this.onChange}/>
                     </div>
                     <button id="login-btn" type="submit">Login</button>

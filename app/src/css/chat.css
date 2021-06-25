@@ -19,6 +19,7 @@ html{
     --login-btn-hover: #2980ac;
     --login-btn-text-color: #aaaaaa;
     --login-btn-text-hover: #1e2224;
+    --button-hover: #cccccc;
 }
 
 html[data-theme='dark']{
@@ -35,13 +36,15 @@ html[data-theme='dark']{
     --textbox-content-color: #cccccc;
     --textbox-bkg-color-hover: gray;
     --button-unselected: #30475E;
-    --button-selected: #2b5278;
     --headding-color: #bd8d60;
     --form-bkg-color: #40444b;
     --login-btn-color: #bd8d60;
     --login-btn-hover: #694e35;
     --login-btn-text-color: #1e2224;
     --login-btn-text-hover: #aaaaaa;
+    --button-selected: #346391;
+    --button-hover: #243240;
+
 }
 
 header {
@@ -92,10 +95,18 @@ p {
     margin: 5px 0;
     border-radius: 5px;
     border: none;
-    background-color: var(--button-unselected);
+    /* background-color: var(--button-unselected); */
     transition: ease 0.05s;
     color: var(--font-color);
     padding: 0.3rem 1rem;
+}
+
+#selected {
+    background-color: var(--button-selected);
+}
+
+#unselected {
+    background-color: var(--button-unselected);
 }
 
 .user-card:focus {
@@ -104,7 +115,7 @@ p {
 
 .user-card:hover {
     font-size: 1.5rem;
-    background-color: var(--button-selected);
+    background-color: var(--button-hover)!important;
     transition: ease 0.05s;
 }
 

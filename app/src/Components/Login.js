@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Gun from 'gun'
 import SHA256 from 'crypto-js/sha256'
+import '../css/chat.css'
 
 // initialize gun locally
 const gun = Gun({
@@ -70,19 +71,24 @@ class Login extends Component {
 
     render() {
         return (
-            <div>
+            <div id="login-container">
+                <h1>Pew Chat</h1>
                 <form onSubmit={this.onSubmit}>
-                    <input 
-                        name="name"
-                        placeholder="Username"
-                        type="text"
-                        onChange={this.onChange}/>
-                    <input
-                        name="pass"
-                        placeholder="Password"
-                        type="password"
-                        onChange={this.onChange}/>
-                    <button type="submit">Login</button>
+                    <div id="credentials-container">
+                        <input 
+                            className="form-box"
+                            name="name"
+                            placeholder="Username"
+                            type="text"
+                            onChange={this.onChange}/>
+                        <input
+                            className="form-box"
+                            name="pass"
+                            placeholder="Password"
+                            type="password"
+                            onChange={this.onChange}/>
+                    </div>
+                    <button id="login-btn" type="submit">Login</button>
                 </form>            
             </div>
         )

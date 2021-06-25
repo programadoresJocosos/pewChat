@@ -13,6 +13,12 @@ html{
     --textbox-bkg-color-hover: gray;
     --button-unselected: #e0e0e0;
     --button-selected: #419fd9;
+    --headding-color: #194f69;
+    --form-bkg-color: rgb(182, 182, 182);
+    --login-btn-color: #194f69;
+    --login-btn-hover: #2980ac;
+    --login-btn-text-color: #aaaaaa;
+    --login-btn-text-hover: #1e2224;
 }
 
 html[data-theme='dark']{
@@ -30,6 +36,12 @@ html[data-theme='dark']{
     --textbox-bkg-color-hover: gray;
     --button-unselected: #30475E;
     --button-selected: #2b5278;
+    --headding-color: #bd8d60;
+    --form-bkg-color: #40444b;
+    --login-btn-color: #bd8d60;
+    --login-btn-hover: #694e35;
+    --login-btn-text-color: #1e2224;
+    --login-btn-text-hover: #aaaaaa;
 }
 
 header {
@@ -175,6 +187,68 @@ p {
 #btn-send:hover{
     background-color: var(--textbox-bkg-color-hover);
     transition: ease .4s;
+}
+#btn-send:focus{
+    background-color: var(--textbox-bkg-color-hover);
+    outline: none;
+}
+
+#login-container{
+    width: 30%;
+    height: 30vh;
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 15px;
+    background-color: var(--bkg-user-container);
+}
+
+#credentials-container{
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.form-box{
+    width: calc(50% - 20px);
+    height: 2em;
+    border-radius: 10px;
+    border: none;
+    margin: 0 5px;
+    color: var(--font-color);
+    background-color: var(--form-bkg-color);
+}
+
+.form-box:focus{
+    outline: none;
+}
+
+h1{
+    text-align: center;
+    font-style: italic;
+    color: var(--headding-color);
+}
+
+#login-btn{
+    height: 2rem;
+    width: 80%;
+    margin: 0 10%;
+    background-color: var(--login-btn-color);
+    border-radius: 15px;
+    border: none;
+    color: var(--login-btn-text-color);
+    transition: ease .4s;
+}
+
+#login-btn:hover{
+    background-color: var(--login-btn-hover);
+    color: var(--login-btn-text-hover);
+    transition: ease .4s;
+}
+
+#login-btn:focus{
+    background-color: var(--login-btn-hover);
+    color: var(--login-btn-text-hover);
+    outline: none;
 }
 
 input[type=checkbox]{

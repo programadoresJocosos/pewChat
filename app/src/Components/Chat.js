@@ -15,10 +15,10 @@ const getUsers = "users"
 class Chat extends Component {
     messagesEndRef = React.createRef()
     state = {
-        name: '',
+        name: this.props.name,
         message: '',
         timestamp: '',
-        receiver: '',
+        receiver: 'global',
         messages: [],
         users: ['global']
     }
@@ -29,12 +29,10 @@ class Chat extends Component {
 
     componentDidMount() {
         this.scrollToBottom()
-        this.setState({ name: this.props.name })
-        gun.get(getUrl).map().on( m=> {
-            this.setState({ messages: [...this.state.messages, m],
-                users: [...this.state.users, ...this.getNames()],
-                receiver: 'global'})
-        } )
+        let tmpMsgs = this.getData()
+        let tmpUsrs = this.getNames()
+        this.setState({ name: this.props.name, messages: tmpMsgs,
+                users: ['global', ...tmpUsrs] })
     }
 
     componentDidUpdate() {
@@ -47,7 +45,14 @@ class Chat extends Component {
 
     getData = (users = false) => {
         let tmp = []
-        const url = (users === false) ? getUrl : getUsers
+        let [first, second] = this.getFirstSecond()
+        let url
+        if (users === true)
+            url = getUsers
+        else if (this.state.receiver === "global")
+            url = "global"
+        else
+            url = `${first}:${second}`
         gun.get(url).map().on( m => {
             tmp.push(m)
         })
@@ -58,19 +63,27 @@ class Chat extends Component {
         let tmp = this.getData(true)
         let names = new Set()
         tmp.map( m => {
-            names.add(m.name)
+            if (m.name !== this.state.name)
+                names.add(m.name)
         })
         return Array.from(names)
     }
 
+    getFirstSecond = () => {
+        return (this.state.name < this.state.receiver)
+                ? [this.state.name, this.state.receiver] : [this.state.receiver, this.state.name]
+    }
+
     saveMessage = () => {
-        const msg = gun.get(getUrl)
+        const [first, second] = this.getFirstSecond()
+        const url = (this.state.receiver === "global") ? "global" : `${first}:${second}`
+        const msg = gun.get(url)
         if (this.state.message.length > 0) {
             msg.set({
                 name: this.state.name,
                 message: this.state.message,
                 timestamp: Moment().format('LT'),
-                receiver: this.state.receiver
+                receiver: url
             })
             this.setState({message: ''})
         }
@@ -81,14 +94,18 @@ class Chat extends Component {
     }
 
     render() {
-        console.log(this.state.users)
         return (
             <div className="app-container">
                 <h2 className="user-name">{this.state.name}</h2>
                 <div className="main-chat">
                     <div className="user-container">
-                    {this.getNames().map((e, i) =>
-                        <button className="user-card" key={i}> 
+                    {['global', ...this.getNames()].map((e, i) =>
+                        <button
+                            name="receiver"
+                            value={e}
+                            onClick={this.onChange}
+                            className="user-card"
+                            key={i}> 
                             {e}
                         </button>
                     )}
@@ -96,20 +113,20 @@ class Chat extends Component {
                     <div className="chat-container">
                         <div className="msg-container">
                         {
-                            this.state.messages.map((message, index) => (
+                            this.getData().map((message, index) => (
                             <div className={`msg-card
                                 ${message.name === this.state.name
                                         ? "bgc-me": "bgc-other"}`} key={index}>
-                            <p>
-                                {message.name === this.state.name ? <></>:<b>{message.name}</b>}
-                                {message.name === this.state.name ? <></>:<br/>}
-                                {message.message}
-                            </p>
-                            <sub>
-                                {message.timestamp}
-                            </sub>
+                                <p>
+                                    {message.name === this.state.name ? <></>:<b>{message.name}</b>}
+                                    {message.name === this.state.name ? <></>:<br/>}
+                                    {message.message}
+                                </p>
+                                <sub>
+                                    {message.timestamp}
+                                </sub>
                             </div>
-                          ))
+                            ))
                         }
                         <div ref={this.messagesEndRef}/>
                         </div>

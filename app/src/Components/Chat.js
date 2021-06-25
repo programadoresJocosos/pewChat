@@ -33,6 +33,11 @@ class Chat extends Component {
         let tmpUsrs = this.getNames()
         this.setState({ name: this.props.name, messages: tmpMsgs,
                 users: ['global', ...tmpUsrs] })
+        this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000);
+    }
+
+    componentWillUnmount() {
+      clearInterval(this.interval);
     }
 
     componentDidUpdate() {
@@ -84,8 +89,9 @@ class Chat extends Component {
                 message: this.state.message,
                 timestamp: Moment().format('LT'),
                 receiver: url
+            }, () => {
+                this.setState({message: ''}, () => console.log("entra"))
             })
-            this.setState({message: ''})
         }
     }
 

@@ -1,7 +1,7 @@
 <div align="center">
   <h1>Pew Chat</h1>
   <img width=30% height=25% src="./app/public/pew.png" alter=""></img>
-  <h4>Aplicación de mensajería descentralizada basada en P2P (<i>peer-to-peer</i>) sencilla, segura, modular y escalable</h4>
+  <h4>Aplicación de mensajería descentralizada basada en P2P (<i>peer-to-peer</i>) sencilla, segura, modular y escalable.</h4>
   <br>
 </div>
 
@@ -50,15 +50,16 @@
   npm start
   ```
   
-  <p>Una vez que la aplicación ha inicializado correctamente se muestran los siguientes datos en pantalla.</p>
-  <img src="imgs/app.png" alter=""></img>
-  
   <p>Una vez que la aplicación ha inicializado correctamente se muestran los siguientes datos en la terminal y se abrirá una ventana en el navegador desde el cual podremos comenzar a utilizar la aplicación.</p>
   <img src="imgs/app.png" alter=""></img>
   
   <h2>Capturas de ejecución</h2>
   <img src="imgs/pewchat.png" alter=""></img>
+  <p>Login de Pew chat (modo claro).</p>
   <img src="imgs/pewchat_dark.png" alter=""></img>
+  <p>Login de Pew chat (modo oscuro).</p>
   <img src="imgs/pewchat_chat.png" alter=""></img>
+  <p>Página principal de Pew chat (modo claro).</p>
   <img src="imgs/pewchat_chatdark.png" alter=""></img>
+  <p>Página principal de Pew chat (modo oscuro).</p>
 </div>
